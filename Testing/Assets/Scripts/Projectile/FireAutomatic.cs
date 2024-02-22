@@ -6,10 +6,10 @@ public class FireAutomatic : MonoBehaviour
 {
     public Transform firepoint;
     public GameObject homingProjectilePrefab;
-    // Start is called before the first frame update
+    public float AppearTime;
     void Start()
     {
-        InvokeRepeating("Shoot", 3f, 3f);
+        InvokeRepeating("Shoot", AppearTime, 3f);
     }
 
     private void Shoot()

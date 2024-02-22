@@ -4,55 +4,71 @@ using UnityEngine;
 
 public class Bridge : MonoBehaviour
 {
-    public GameObject bridge; // Reference to the bridge object
-    public LayerMask activationLayer; // Layer(s) to check for activation (e.g., player or objects)
+    public GameObject bridge; // Reference to the bridge GameObject
+    public Transform activationCube; // Reference to the cube that triggers the bridge
+    public float activationTime = 3f; // Time to wait before the bridge appears
+    public float bridgeDuration = 10f; // Duration for the bridge to stay active
 
-    private bool isActivated = false;
+    private bool bridgeActivated = false;
+    private float timer = 0f;
 
-    void Start()
+    private void Update()
     {
-        DeactivateBridge(); // Start with the bridge deactivated
-    }
-
-    void Update()
-    {
-        // Check if there are colliders on the activation layer within the button's bounds
-        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale / 2, Quaternion.identity, activationLayer);
-
-        if (colliders.Length > 0)
+        // Check if the player is on the activation cube
+        if (IsPlayerOnCube())
         {
-            if (!isActivated)
+            timer += Time.deltaTime;
+
+            // Activate the bridge if the timer exceeds activation time
+            if (timer >= activationTime && !bridgeActivated)
             {
                 ActivateBridge();
             }
         }
         else
         {
-            if (isActivated)
+            // Reset the timer if the player leaves the cube
+            timer = 0f;
+
+            // Deactivate the bridge when leaving the cube
+            if (bridgeActivated)
+            {
+                DeactivateBridge();
+            }
+        }
+
+        // If the bridge is activated, count down the duration
+        if (bridgeActivated)
+        {
+            bridgeDuration -= Time.deltaTime;
+
+            // Deactivate the bridge after the specified duration
+            if (bridgeDuration <= 0f)
             {
                 DeactivateBridge();
             }
         }
     }
 
-    void ActivateBridge()
+    private bool IsPlayerOnCube()
     {
-        // Activate the bridge (set it active or enable its components)
+        // You may need to adjust the size of the cube collider or use other methods
+        // to check if the player is on the cube
+        Collider cubeCollider = activationCube.GetComponent<Collider>();
+        return cubeCollider.bounds.Contains(transform.position);
+    }
+
+    private void ActivateBridge()
+    {
         bridge.SetActive(true);
-        isActivated = true;
+        bridgeActivated = true;
     }
 
-    void DeactivateBridge()
+    private void DeactivateBridge()
     {
-        // Deactivate the bridge (set it inactive or disable its components)
         bridge.SetActive(false);
-        isActivated = false;
-    }
-
-    // Draw the button's bounds in the scene view for visualization
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, transform.localScale);
+        bridgeActivated = false;
+        timer = 0f; // Reset the timer when the bridge deactivates
+        bridgeDuration = 10f; // Reset the duration for the next activation
     }
 }
