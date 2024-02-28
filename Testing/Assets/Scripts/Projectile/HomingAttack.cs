@@ -31,4 +31,12 @@ public class HomingAttack : MonoBehaviour
             Destroy(rb.gameObject, 5f);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Fireball"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
