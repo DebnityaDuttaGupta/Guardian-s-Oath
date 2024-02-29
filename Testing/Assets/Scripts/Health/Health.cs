@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
         if(currentHealth == 0)
         {
             Destroy(rb.gameObject);
+            GameManager.instance.GameOver();
         }
     }
 
@@ -29,7 +30,7 @@ public class Health : MonoBehaviour
         if(col.collider.CompareTag("HomingProjectile"))
         {
             Destroy(col.gameObject);
-            TakeDamage(1);
+            TakeDamage(5);
         }
     }
 

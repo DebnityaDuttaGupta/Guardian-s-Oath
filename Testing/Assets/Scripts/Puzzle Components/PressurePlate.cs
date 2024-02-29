@@ -9,7 +9,7 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player2"))
+        if (other.CompareTag("Player") || other.CompareTag("Box"))
         {
             isPlayerOnPlate = true;
             StartCoroutine(AppearAndDisappear());
@@ -18,7 +18,7 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player2"))
+        if (other.CompareTag("Player") || other.CompareTag("Box"))
         {
             isPlayerOnPlate = false;
         }

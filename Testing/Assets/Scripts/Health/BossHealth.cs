@@ -9,6 +9,9 @@ public class BossHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public delegate void BossDestroyed();
+    public event BossDestroyed OnBossDestroyed;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -20,16 +23,30 @@ public class BossHealth : MonoBehaviour
         if (col.collider.CompareTag("Fireball"))
         {
             Destroy(col.gameObject);
-            TakeDamage(1);
+            TakeDamage(5);
         }
     }
-
-
 
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
         healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            DestroyBoss();
+        }
+    }
+
+    void DestroyBoss()
+    {
+        if (OnBossDestroyed != null)
+        {
+            OnBossDestroyed();
+            Debug.Log("Boss Destroyed");
+        }
+
+        Destroy(gameObject);
     }
 }

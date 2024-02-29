@@ -685,7 +685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8361293580732870043, guid: 3f3b03a825191fc48a4deb45e91f1390, type: 3}
       propertyPath: screenBuildIndex
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2019,6 +2019,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2682253809743422747, guid: 83701f798377acb4086f0ee65edf5674, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b753fe780bda0d46b43980fad3f017d, type: 2}
     - target: {fileID: 3313526090153927669, guid: 83701f798377acb4086f0ee65edf5674, type: 3}
       propertyPath: speed
       value: 0.2
@@ -2031,6 +2035,10 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 19132706}
+    - target: {fileID: 3313526090153927669, guid: 83701f798377acb4086f0ee65edf5674, type: 3}
+      propertyPath: decelerationDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3443396045623269225, guid: 83701f798377acb4086f0ee65edf5674, type: 3}
       propertyPath: m_Name
       value: Moving Platform

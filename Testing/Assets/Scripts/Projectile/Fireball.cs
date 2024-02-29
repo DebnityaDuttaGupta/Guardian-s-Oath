@@ -9,7 +9,7 @@ public class Fireball : MonoBehaviour
     
     void Start()
     {
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.forward * speed;
     }
 
     private void Update()

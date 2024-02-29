@@ -12,6 +12,8 @@ TagManager:
   - Ground
   - Pillar
   - Torch
+  - Box
+  - Fireball2
   layers:
   - Default
   - TransparentFX
@@ -27,11 +29,11 @@ TagManager:
   - Pillar
   - Ground
   - MovingPlatform
-  - 
-  - 
-  - 
-  - 
-  - 
+  - FallingTrap
+  - Box
+  - Wall
+  - Teleporter
+  - Fireball2
   - 
   - 
   - 

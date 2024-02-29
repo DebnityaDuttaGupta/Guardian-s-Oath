@@ -9,15 +9,19 @@ public class ProperMovement : MonoBehaviour
     public float jumpForce = 10f;
     public float groundCheckDistance = 0.1f;
     public float jumpCooldown = 0.5f;
+    public float attackAnimationDuration = 3.0f;
+    private float lastJumpTime = 0f;
 
-    private bool isGrounded;
+    public bool isGrounded;
+    public bool HasKey { get; set; } = false;
+    private bool isJumping = false;
+
     private Transform groundCheck;
     private Rigidbody rb;
     private Animator anim;
-    private bool isJumping = false;
-    private float lastJumpTime = 0f;
 
     private MovingPlatform currentMovingPlatform;
+    private Quaternion initialRotation;
 
     private void Start()
     {
@@ -31,6 +35,8 @@ public class ProperMovement : MonoBehaviour
 
         // Ensure rigidbody uses gravity
         rb.useGravity = true;
+
+        initialRotation = transform.rotation;
     }
 
     private void Update()
@@ -40,7 +46,9 @@ public class ProperMovement : MonoBehaviour
 
         if (isGrounded && CheckIfOnMovingPlatform())
         {
-            transform.parent = currentMovingPlatform.transform;
+            //transform.parent = currentMovingPlatform.transform;
+            Vector3 platformMovement = currentMovingPlatform.GetPlatformMovement();
+            transform.position += platformMovement;
         }
         else
         {
@@ -48,17 +56,28 @@ public class ProperMovement : MonoBehaviour
         }
     }
 
+    
+
     private void FixedUpdate()
     {
         HandleMovementInput();
         HandleDirection();
         HandleJump();
+
+
+        transform.rotation = initialRotation;
     }
 
     private void CheckGrounded()
     {
         // Check if the player is grounded
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, LayerMask.GetMask("Ground"));
+
+        isGrounded |= Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, LayerMask.GetMask("MovingPlatform"));
+
+        isGrounded |= Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, LayerMask.GetMask("FallingTrap"));
+
+        isGrounded |= Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, LayerMask.GetMask("Box"));
     }
 
     private void HandleMovementInput()
@@ -69,9 +88,10 @@ public class ProperMovement : MonoBehaviour
 
         bool isMoving = Mathf.Abs(horizontalInput) > 0.01f;
 
-        Vector3 newPosition = transform.position + new Vector3(horizontalInput * moveSpeed * Time.fixedDeltaTime, 0f, 0f);
+        //Vector3 newPosition = transform.position + new Vector3(horizontalInput * moveSpeed * Time.fixedDeltaTime, 0f, 0f);
+        transform.position += new Vector3(horizontalInput * moveSpeed * Time.fixedDeltaTime, 0f, 0f);
 
-        transform.position = newPosition;
+        //transform.position = newPosition;
 
         float idleBlend = 0f;
         float walkBlend = 0.2f;
@@ -150,7 +170,8 @@ public class ProperMovement : MonoBehaviour
     {
         // Check if the player is on the moving platform using a raycast
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance, LayerMask.GetMask("MovingPlatform")))
+        Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f; // Adjust the raycast origin
+        if (Physics.Raycast(raycastOrigin, Vector3.down, out hit, groundCheckDistance, LayerMask.GetMask("MovingPlatform")))
         {
             MovingPlatform platform = hit.collider.GetComponentInParent<MovingPlatform>();
             return (platform != null && platform == currentMovingPlatform);
@@ -162,5 +183,15 @@ public class ProperMovement : MonoBehaviour
     {
         // Set the animation blend value for attack
         anim.SetFloat("Blend", 0.8f);
+        StartCoroutine(WaitAndResetAnimation());
+    }
+
+    private IEnumerator WaitAndResetAnimation()
+    {
+        // Wait for the attack animation to complete
+        yield return new WaitForSeconds(attackAnimationDuration);
+
+        // Reset the animation blend value after the animation is complete
+        anim.SetFloat("Blend", 0f);
     }
 }

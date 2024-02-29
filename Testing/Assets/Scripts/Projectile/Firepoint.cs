@@ -25,35 +25,36 @@ public class Firepoint : MonoBehaviour
         }
     }
 
+
     IEnumerator ShootWithDelay()
     {
-        // Call the method in DifferentMovement to change the animation
         movementScript.SetAttackAnimation();
 
-        // Wait for the attack delay
         yield return new WaitForSeconds(attackDelay);
 
-        // Shoot the fireball
         Shoot();
+
+        yield return null;
     }
 
     private void Shoot()
     {
-        // Instantiate the fireball
-        GameObject fireball = Instantiate(firepointPrefab, firepoint.position, firepoint.rotation);
+        GameObject fireball = Instantiate(firepointPrefab, firepoint.position, Quaternion.identity);
 
-        // Get the Rigidbody component of the fireball
         Rigidbody rb = fireball.GetComponent<Rigidbody>();
 
-        // Check if the Rigidbody is present
         if (rb != null)
         {
-            // Set the velocity to make the fireball move forward
-            rb.velocity = firepoint.forward * fireballSpeed;
+            Vector3 shootDirection = transform.localScale.x > 0 ? Vector3.right : Vector3.left;
+
+            fireball.transform.rotation = Quaternion.LookRotation(shootDirection);
+
+            rb.velocity = shootDirection * fireballSpeed;
         }
         else
         {
             Debug.LogError("Rigidbody component not found on the fireballPrefab.");
         }
     }
+
 }

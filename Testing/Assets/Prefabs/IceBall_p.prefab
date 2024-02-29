@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 4710577760832143403}
   - component: {fileID: -4836028315803472531}
   - component: {fileID: -4986705303217449778}
-  - component: {fileID: -2568187629379513970}
-  m_Layer: 8
+  - component: {fileID: 1935260650252707833}
+  - component: {fileID: 1939803600633407142}
+  m_Layer: 18
   m_Name: IceBall_p
-  m_TagString: Fireball
+  m_TagString: Fireball2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4892,7 +4893,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2568187629379513970
+--- !u!114 &1935260650252707833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4901,11 +4902,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1371886614318693997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32730ef0dc8f0954c8df396cc389ca60, type: 3}
+  m_Script: {fileID: 11500000, guid: 4704b3ea3ae50904bb956f86ddba223c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
   rb: {fileID: -4836028315803472531}
+--- !u!114 &1939803600633407142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371886614318693997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109d0935bdaea0b4a91cebe49e53a4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6031278301863109378
 GameObject:
   m_ObjectHideFlags: 0
@@ -4917,7 +4930,7 @@ GameObject:
   - component: {fileID: 7571960652102220631}
   - component: {fileID: 1229220913950649016}
   - component: {fileID: 6324953501197776158}
-  m_Layer: 8
+  m_Layer: 18
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9756,7 +9769,7 @@ GameObject:
   - component: {fileID: 4382897984276292055}
   - component: {fileID: 28700014526588474}
   - component: {fileID: 9179043880245451556}
-  m_Layer: 8
+  m_Layer: 18
   m_Name: Fireball_p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
