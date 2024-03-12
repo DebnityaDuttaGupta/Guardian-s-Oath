@@ -156,7 +156,7 @@ public class ProperMovement : MonoBehaviour
         }
         else if (rb.velocity.y < 0 && isGrounded)
         {
-            float idleBlend = 0f;
+            //float idleBlend = 0f;
             float walkBlend = 0.2f;
             float runBlend = 0.4f;
             float targetBlend = Input.GetKey(KeyCode.LeftShift) ? runBlend : walkBlend;
@@ -193,5 +193,13 @@ public class ProperMovement : MonoBehaviour
 
         // Reset the animation blend value after the animation is complete
         anim.SetFloat("Blend", 0f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("HomingProjectile"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class SimpleCamera : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Transform target; // The target the camera will follow
-    public Vector3 offset = new Vector3(0f, 2f, -5f); // The offset from the target
-
     public float smoothSpeed = 0.125f; // The smoothness of the camera follow
-    [SerializeField] public float additionalHeight = 2f;
 
     void LateUpdate()
     {
         if (target != null)
         {
-            Vector3 targetPosition = target.position + offset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
+            // Set the desired position and rotation values
+            Vector3 desiredPosition = new Vector3(target.position.x, target.position.y + 5f, -10f);
+            Quaternion desiredRotation = Quaternion.Euler(10f, 0f, 0f);
 
-            // Lift the camera without affecting rotation or offset
-            smoothedPosition.y += additionalHeight;
-
-            transform.position = smoothedPosition;
-            transform.LookAt(target.position);
+            // Smoothly interpolate to the desired position and rotation
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, smoothSpeed);
         }
         else
         {

@@ -8,8 +8,14 @@ public class MovingPlatformLeftandRight : MonoBehaviour
     public Transform pointB;
     public float normalSpeed = 2f;
 
+    public GameObject triggerObject;
+
     private bool movingToA = true; // Start by moving towards point A
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
     private void Update()
     {
         MoveTowardsTarget();
@@ -28,6 +34,22 @@ public class MovingPlatformLeftandRight : MonoBehaviour
         {
             // Change direction when reaching the target position
             movingToA = !movingToA;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == triggerObject)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == triggerObject)
+        {
+            gameObject.SetActive(false);
         }
     }
 }

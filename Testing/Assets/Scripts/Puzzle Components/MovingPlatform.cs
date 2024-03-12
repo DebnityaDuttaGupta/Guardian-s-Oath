@@ -12,8 +12,11 @@ public class MovingPlatform : MonoBehaviour
     private bool movingToA = false;
     public float currentSpeed;
 
+    public GameObject triggerObject;
+
     private void Start()
     {
+        gameObject.SetActive(false);
         currentSpeed = normalSpeed;
     }
 
@@ -54,5 +57,21 @@ public class MovingPlatform : MonoBehaviour
     {
         float pingPongValue = Mathf.PingPong(Time.time * normalSpeed, 1.0f);
         return Vector3.Lerp(pointA.position, pointB.position, pingPongValue) - transform.position;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == triggerObject)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == triggerObject)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

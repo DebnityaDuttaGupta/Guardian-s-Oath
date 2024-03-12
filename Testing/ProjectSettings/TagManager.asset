@@ -21,8 +21,8 @@ TagManager:
   - Camera border
   - Water
   - UI
-  - Player1
-  - Player2
+  - Player
+  - 
   - Fireball
   - HomingProjectile
   - Torch
@@ -34,7 +34,7 @@ TagManager:
   - Wall
   - Teleporter
   - Fireball2
-  - 
+  - Border
   - 
   - 
   - 

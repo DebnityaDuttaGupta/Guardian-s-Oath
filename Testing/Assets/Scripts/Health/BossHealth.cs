@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossHealth : MonoBehaviour
@@ -7,7 +6,13 @@ public class BossHealth : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
+    public Transform Firepoint;
+
+    public GameObject beamAttackPrefab;
+
     public HealthBar healthBar;
+
+    private bool beamAttackActivated = false;
 
     public delegate void BossDestroyed();
     public event BossDestroyed OnBossDestroyed;
@@ -37,6 +42,11 @@ public class BossHealth : MonoBehaviour
         {
             DestroyBoss();
         }
+        else if (currentHealth <= maxHealth * 0.2f && !beamAttackActivated)
+        {
+            ActivateBeamAttack();
+            beamAttackActivated=true;
+        }
     }
 
     void DestroyBoss()
@@ -48,5 +58,19 @@ public class BossHealth : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    void ActivateBeamAttack()
+    {
+        if (beamAttackPrefab != null)
+        {
+            GameObject beamAttack = Instantiate(beamAttackPrefab, Firepoint.position, Firepoint.rotation);
+
+            BeamAttack beamAttackScript = beamAttack.GetComponent<BeamAttack>();
+            if (beamAttackScript != null)
+            {
+                beamAttackScript.OnBeamAttackFinished -= DestroyBoss;
+            }
+        }
     }
 }
