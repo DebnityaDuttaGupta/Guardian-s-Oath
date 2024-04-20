@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject pauseMenuUI;
 
-    public Text gameOverText;
-
     public float restartDelay = 10f;
 
     private bool isPaused = false;
@@ -33,13 +31,13 @@ public class GameManager : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         gameOverPanel.SetActive(false);
+        FindAnyObjectByType<AudioManager>().Play("Boss Music");
     }
 
     public void GameOver()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
-        gameOverText.text = "You Died";
         StartCoroutine(RestartGame());
     }
 

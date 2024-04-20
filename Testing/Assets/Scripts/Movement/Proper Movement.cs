@@ -90,7 +90,7 @@ public class ProperMovement : MonoBehaviour
 
         //Vector3 newPosition = transform.position + new Vector3(horizontalInput * moveSpeed * Time.fixedDeltaTime, 0f, 0f);
         transform.position += new Vector3(horizontalInput * moveSpeed * Time.fixedDeltaTime, 0f, 0f);
-
+        
         //transform.position = newPosition;
 
         float idleBlend = 0f;
@@ -106,10 +106,12 @@ public class ProperMovement : MonoBehaviour
             if (isMoving)
             {
                 anim.SetFloat("Blend", anim.GetFloat("SmoothBlend"));
+                
             }
             else
             {
                 anim.SetFloat("Blend", 0f);
+                FindAnyObjectByType<AudioManager>().Play("Running");
             }
         }
         else

@@ -9,13 +9,21 @@ public class GameManagerLevel4 : MonoBehaviour
     public static GameManagerLevel4 instance;
 
     public GameObject gameOverPanel;
+    public GameObject winPanel;
     public GameObject pauseMenuUI;
+    public GameObject CreditsUI;
 
-    public Text gameOverText;
+    public GameObject playerHealthBar;
+    public GameObject bossHealthBar;
+    public GameObject levelIndicator;
+    public GameObject playericon;
+    public GameObject bossicon;
 
     public float restartDelay = 10f;
 
     private bool isPaused = false;
+
+    private Animator creditsAnimator;
 
     private void Awake()
     {
@@ -33,14 +41,41 @@ public class GameManagerLevel4 : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         gameOverPanel.SetActive(false);
+        winPanel.SetActive(false);
+        CreditsUI.SetActive(false);
+
+        playerHealthBar.SetActive(true);
+        bossHealthBar.SetActive(true);
+        levelIndicator.SetActive(true);
+        playericon.SetActive(true);
+        bossicon.SetActive(true);
+
+        creditsAnimator = CreditsUI.GetComponent<Animator>();
     }
 
     public void GameEnd()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
-        gameOverText.text = "You Died";
         StartCoroutine(RestartGame());
+    }
+
+    public void GameWin()
+    {
+        StartCoroutine(DelayBeforeStopTime());
+        playerHealthBar.SetActive(false);
+        bossHealthBar.SetActive(false);
+        levelIndicator.SetActive(false);
+        playericon.SetActive(false);
+        bossicon.SetActive(false);
+        pauseMenuUI.SetActive(false);
+    }
+
+    IEnumerator DelayBeforeStopTime()
+    {
+        yield return new WaitForSeconds(5f);
+        Time.timeScale = 0f;
+        winPanel.SetActive(true);
     }
 
     IEnumerator RestartGame()
@@ -73,6 +108,17 @@ public class GameManagerLevel4 : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+    }
+
+    public void CreditScene()
+    {
+        Time.timeScale = 1f;
+        CreditsUI.SetActive(true);
+
+        if (creditsAnimator != null)
+        {
+            creditsAnimator.Play("Starting Position");
+        }
     }
 
     public void Restart()

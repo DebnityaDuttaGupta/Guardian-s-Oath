@@ -65,7 +65,7 @@ public class BossHealth : MonoBehaviour
         if (beamAttackPrefab != null)
         {
             GameObject beamAttack = Instantiate(beamAttackPrefab, Firepoint.position, Firepoint.rotation);
-
+            FindAnyObjectByType<AudioManager>().Play("MAgic Beam");
             BeamAttack beamAttackScript = beamAttack.GetComponent<BeamAttack>();
             if (beamAttackScript != null)
             {

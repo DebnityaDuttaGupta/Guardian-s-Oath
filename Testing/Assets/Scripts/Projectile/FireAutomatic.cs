@@ -15,5 +15,6 @@ public class FireAutomatic : MonoBehaviour
     private void Shoot()
     {
         Instantiate(homingProjectilePrefab, firepoint.position, firepoint.rotation);
+        FindAnyObjectByType<AudioManager>().Play("Fireball");
     }
 }

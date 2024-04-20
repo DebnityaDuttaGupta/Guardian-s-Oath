@@ -18,6 +18,7 @@ public class BossHealth2 : MonoBehaviour
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        OnBossDestroyed += GameManagerLevel4.instance.GameWin;
     }
 
     private void OnCollisionEnter(Collision col)
